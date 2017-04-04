@@ -1,17 +1,21 @@
+Vue.filter("money",function(value,type){
+    return "$ " + value.toFixed(2)+type;
+});
 new Vue({
     el: "#app",
     data: {
+        delFlag:false,
         totalMoney: 0,
         productList: [],
-        checkAllFlag:false
+        checkAllFlag:false,
+       curProduct:''
     },
     filters: {
-        formatMoney:function(value){
-            return "$ " + value.toFixed(2);
-        }
+
     },
     mounted: function () {
         this.cartView();
+        this.calcTotalPrice;
     },
     methods: {
         cartView: function () {
@@ -24,7 +28,7 @@ new Vue({
             // });
             axios.get("data/cart.json").then(res => {
                 this.productList = res.data.result.productList;
-                this.totalMoney = res.data.result.totalMoney;
+               // this.totalMoney = res.data.result.totalMoney;
             });
         },
         changeMoney: function(product,way){
@@ -36,6 +40,7 @@ new Vue({
                     product.productQuentity=1
                 }
             }
+            this.calcTotalPrice();            
         },
         selectedProduct:function(item){
             if(typeof item.checked == 'undefined'){
@@ -44,6 +49,7 @@ new Vue({
             }else{
                 item.checked = !item.checked;
             }
+            this.calcTotalPrice();
         },
         ckeckAll:function(flag){
             this.checkAllFlag = flag;
@@ -55,9 +61,26 @@ new Vue({
                         item.checked = _this.checkAllFlag;
                     }
                 });
-            }
+                this.calcTotalPrice();
+            },
+            calcTotalPrice:function(){
+                var _this = this;
+                this.totalMoney = 0;
+                this.productList.forEach(function(item,index){
+                    if(item.checked){
+                        _this.totalMoney += item.productPrice*item.productQuentity;
+                    }
+                });
+            },
+            delConfirm:function(item){
+                this.delFlag = true;
+                this.curProduct = item;
+            },
+            delProduct:function(){
+               var index = this.productList.indexOf(this.curProduct);
+               this.productList.splice(index,1);
+               this.delFlag = false;
+               axios.get()//通过后台删除
+        }
     }
 });
-Vue.filter("money",function(value,type){
-    return "$ " + value.toFixed(2)+type;
-})

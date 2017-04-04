@@ -1,2 +1,2 @@
-##基础vue2.0及axios的购物车
+## vue2.0及axios的购物车
 
