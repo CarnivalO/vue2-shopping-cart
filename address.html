@@ -84,7 +84,7 @@
                             <div class="addr-opration addr-default" v-if="item.isDefault">默认地址</div>
                         </li>
 
-                        <li class="addr-new">
+                        <li class="addr-new" @click="addAddress">
                             <div class="add-new-inner">
                                 <i class="icon-add">
                                     <svg class="icon icon-add"><use xlink:href="#icon-add"></use></svg>
@@ -152,9 +152,18 @@
                     </div>
                     <div class="md-content">
                         <div class="confirm-tips">
-                             <label for="userName">姓名</label> <input id="userName"/>
-                             <label for="address">地址</label> <input id="address"/>
-                             <label for="mobilePhone">手机号</label> <input id="mobilePhone"/>
+                            <div>
+                             <label for="userName">姓名:</label> <input id="userName" v-model="userName"/>
+                             </div>
+                            <div>
+                             <label for="address">地址:</label> <input id="streetName" v-model="streetName"/>
+                             </div>
+                             <div>
+                             <label for="postCode">邮编:</label> <input id="postCode" v-model="postCode"/>
+                             </div>
+                             <div>
+                             <label for="tel">手机:</label> <input id="tel" v-model="tel"/>
+                             </div>
                         </div>
                         <div class="btn-wrap col-2">
                             <button class="btn btn--m" id="btnModalConfirm" @click="modAddress()">Yes</button>

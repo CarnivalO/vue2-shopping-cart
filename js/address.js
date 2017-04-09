@@ -7,7 +7,11 @@ new Vue({
         currentIndex: 0,
         shippingMethod: 1,
         delFlag: false,
-        modFlag:false
+        modFlag:false,
+        userName:"",
+        streetName:"",
+        postCode:"",
+        tel:""
     },
     mounted: function () {
         this.$nextTick(function () {
@@ -58,11 +62,24 @@ new Vue({
         modConfirm:function (index){
             this.modFlag = true;
             this.currentIndex = index;
+            this.userName=this.addressList[index].userName;
+            this.streetName=this.addressList[index].streetName;
+            this.postCode=this.addressList[index].postCode;
+            this.tel=this.addressList[index].tel;
         },
          modAddress: function () {
-            this.addressList.splice(this.currentIndex, 1);
-            this.delFlag = false;
-            //axios.get() 通过后台删除
+            this.$set(this.addressList[this.currentIndex], "userName", this.userName);
+            this.$set(this.addressList[this.currentIndex], "streetName", this.streetName);
+            this.$set(this.addressList[this.currentIndex], "postCode", this.postCode);
+            this.$set(this.addressList[this.currentIndex], "tel", this.tel);
+            this.modFlag = false;
         },
+        addAddress:function(){
+            this.modFlag = true;
+            this.userName="";
+            this.streetName="";
+            this.postCode="";
+            this.tel="";
+        }
     }
 })
