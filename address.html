@@ -58,14 +58,14 @@
             <div class="addr-list-wrap">
                 <div class="addr-list">
                     <ul>
-                        <li v-for="(item,index) in filteredAddress" :class="{'check':index==currentIndex}" @click="currentIndex=index">
+                        <li track-by="$index" v-for="(item,index) in filteredAddress" :class="{'check':index==currentIndex}" @click="currentIndex=index">
                             <dl>
                                 <dt>{{item.userName}}</dt>
                                 <dd class="address">{{item.streetName}}</dd>
                                 <dd class="tel">{{item.tel}}</dd>
                             </dl>
                             <div class="addr-opration addr-edit">
-                                <a href="javascript:;" class="addr-edit-btn"  @click="modConfirm(index)">
+                                <a href="javascript:;" class="addr-edit-btn"  @click="modAddress(index)">
                                     <svg class="icon icon-edit">
                                         <use xlink:href="#icon-edit"></use>
                                     </svg>
@@ -145,10 +145,10 @@
                 </div>
             </div>
             <!--编辑框-->
-            <div class="md-modal modal-msg md-modal-transition" :class="{'md-show':modFlag}" id="showModal">
+            <div class="md-modal modal-msg md-modal-transition" :class="{'md-show':modalFlag}" id="showModal">
                 <div class="md-modal-inner">
                     <div class="md-top">
-                        <button class="md-close" @click="modFlag=false">关闭</button>
+                        <button class="md-close" @click="modalFlag=false">关闭</button>
                     </div>
                     <div class="md-content">
                         <div class="confirm-tips">
@@ -166,13 +166,13 @@
                              </div>
                         </div>
                         <div class="btn-wrap col-2">
-                            <button class="btn btn--m" id="btnModalConfirm" @click="modAddress()">Yes</button>
-                            <button class="btn btn--m btn--red" id="btnModalCancel" @click="modFlag=false">No</button>
+                            <button class="btn btn--m" id="btnModalConfirm" @click="modFlag?modConfirm():addConfirm()">Yes</button>
+                            <button class="btn btn--m btn--red" id="btnModalCancel" @click="modalFlag=false">No</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="md-overlay" v-if="delFlag || modFlag"></div>
+            <div class="md-overlay" v-if="delFlag || modalFlag"></div>
         </div>
     </div>
     <script src="./node_modules/vue/dist/vue.js"></script>

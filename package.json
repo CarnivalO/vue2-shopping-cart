@@ -12,6 +12,7 @@
   "author": "CarnivalO",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.15.2",
     "vue": "^2.2.6"
   }
 }

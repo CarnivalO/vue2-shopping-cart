@@ -1,17 +1,19 @@
 new Vue({
     el: '.container',
     data: {
-        limitNumber: 3,
+        limitNumber: 8,
         addressList: [],
         loadFlag: true,
         currentIndex: 0,
         shippingMethod: 1,
         delFlag: false,
-        modFlag:false,
-        userName:"",
-        streetName:"",
-        postCode:"",
-        tel:""
+        modFlag: false,
+        addFlag:false,
+        modalFlag:false,
+        userName: "",
+        streetName: "",
+        postCode: "",
+        tel: ""
     },
     mounted: function () {
         this.$nextTick(function () {
@@ -59,27 +61,43 @@ new Vue({
             this.delFlag = false;
             //axios.get() 通过后台删除
         },
-        modConfirm:function (index){
+        modAddress: function (index) {
+            this.modalFlag = true;
             this.modFlag = true;
             this.currentIndex = index;
-            this.userName=this.addressList[index].userName;
-            this.streetName=this.addressList[index].streetName;
-            this.postCode=this.addressList[index].postCode;
-            this.tel=this.addressList[index].tel;
+            this.userName = this.addressList[index].userName;
+            this.streetName = this.addressList[index].streetName;
+            this.postCode = this.addressList[index].postCode;
+            this.tel = this.addressList[index].tel;
         },
-         modAddress: function () {
+        modConfirm: function () {
             this.$set(this.addressList[this.currentIndex], "userName", this.userName);
             this.$set(this.addressList[this.currentIndex], "streetName", this.streetName);
             this.$set(this.addressList[this.currentIndex], "postCode", this.postCode);
             this.$set(this.addressList[this.currentIndex], "tel", this.tel);
             this.modFlag = false;
+            this.modalFlag=false;
         },
-        addAddress:function(){
-            this.modFlag = true;
-            this.userName="";
-            this.streetName="";
-            this.postCode="";
-            this.tel="";
+        addAddress: function () {
+            this.modalFlag = true;
+            this.addFlag = true;
+            this.userName = "";
+            this.streetName = "";
+            this.postCode = "";
+            this.tel = "";
+        },
+        addConfirm: function () {
+            var newAddress = {
+                "addressId": "100005",
+                "userName": this.userName,
+                "streetName": this.streetName,
+                "postCode": this.postCode,
+                "tel": this.tel,
+                "isDefault": false
+            }
+            this.addressList.push(newAddress);
+            this.addFlag = false;
+            this.modalFlag=false;
         }
     }
 })
