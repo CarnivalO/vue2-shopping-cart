@@ -51,8 +51,8 @@ new Vue({
             }
             this.calcTotalPrice();
         },
-        ckeckAll: function (flag) {
-            this.checkAllFlag = flag;
+        ckeckAll: function () {
+            this.checkAllFlag = !this.checkAllFlag;
             var _this = this;
             this.productList.forEach(function (item, index) {
                 if (typeof item.checked == 'undefined') {
@@ -80,6 +80,7 @@ new Vue({
             var index = this.productList.indexOf(this.curProduct);
             this.productList.splice(index, 1);
             this.delFlag = false;
+            this.calcTotalPrice()
             axios.get() //通过后台删除
         }
     }
